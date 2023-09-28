@@ -81,6 +81,12 @@ input.focus()
         if (used.length === Object.keys(data).length) {
             render()
             const wnrhkstlr = JSON.parse(localStorage.getItem(`wnrhkstlr_${dataType}`))
+            const willAdd = {
+                fork: 
+            }
+            if (failIndex !== -1) {
+
+            }
             wnrhkstlr.unshift(corrected)
             localStorage.setItem(`wnrhkstlr_${dataType}`, JSON.stringify(wnrhkstlr))
             daneo.innerText = "시험 끝!"

@@ -1,5 +1,17 @@
 {
   "dependencies": {
     "express": "^4.18.2"
+  },
+  "name": "daneo",
+  "description": "[] corrected기준이 아닌 failed 기준으로 로컬스토리지 갈아엎기",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.0.1"
   }
 }
