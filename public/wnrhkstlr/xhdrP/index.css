@@ -26,8 +26,10 @@ ul {
 }
 
 li > .open-accordion {
-    display: block;
+    display: grid;
     padding: 20px;
+    grid-template-columns: auto 1fr 200px;
+    gap: 20px;
     width: 100%;
     color: #000;
     text-align: left;

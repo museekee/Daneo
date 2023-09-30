@@ -2,8 +2,8 @@
  * @typedef {{
  *  id: string
  *  fork: string | null,
- *  correct: string[],
- *  fail: string[]
+ *  correct: Record<string, string>,
+ *  fail: Record<string, string>
  * }} TResult
  */
 
@@ -27,7 +27,7 @@ export const getDatas = (type, data) => {
  * @returns {TResult}
  */
 export const getData = (type, data, id) => {
-    return JSON.parse(localStorage.getItem(`${type}_${data}`)).find(elem => elem.id === id)
+    return getDatas(type, data).find(elem => elem.id === id)
 }
 
 /**
@@ -35,12 +35,11 @@ export const getData = (type, data, id) => {
  * @param {"ju" | "gek"} type ju: 주관식 / gek: 객관식
  * @param {string} data hanmun등 어떤 데이터인지.
  * @param {string | null} fork 포크한 데이터의 고유 아이디
- * @param {string[]} correct
- * @param {string[]} fail
+ * @param {Record<string, string>} correct
+ * @param {Record<string, string>} fail
  */
 export const addData = (type, data, fork, correct, fail) => {
-    /** @type {TResult[]} */
-    const beforeData = JSON.parse(localStorage.getItem(`${type}_${data}`))
+    const beforeData = getDatas(type, data)
     beforeData.unshift({
         id: genRandHex(16),
         fork,

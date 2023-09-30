@@ -1,3 +1,5 @@
+import * as store from "./../lib/store.mjs"
+
 const daneo = document.getElementById('daneo')
 const input = document.getElementById('input')
 const skip = document.getElementById('skipBtn')
@@ -5,7 +7,7 @@ const choseong = document.getElementById('choseongBtn')
 const remaining = document.getElementById('remaining')
 
 const searchParam = (key) => new URLSearchParams(location.search).get(key)
-const failIndex = parseInt(searchParam("fail") ?? "-1")
+const forkedAt = searchParam("fork") ?? null
 const dataType = searchParam("data")
 
 if (!dataType) {
@@ -22,10 +24,12 @@ const rule = {
     duplication: false
 }
 
-const corrected = []
+const corrected = {}
+const failed = {}
 const used = []
 
 input.focus()
+if (!localStorage.getItem(`ju_${dataType}`)) localStorage.setItem(`ju_${dataType}`, JSON.stringify([]))
 
 ;(async() => {
     const sleep = (timeToDelay) => new Promise((resolve) => setTimeout(resolve, timeToDelay))
@@ -33,11 +37,8 @@ input.focus()
     daneo.innerText = "로딩중"
     const res = await fetch(`/data/${dataType}`)
     const resjson = await res.json()
-    const data = failIndex === -1 ? resjson : Object.keys(resjson).reduce((obj, key) => 
-        (JSON.parse(
-            localStorage.getItem(`wnrhkstlr_${dataType}`)
-        )[failIndex].includes(key) ? obj : { ...obj, [key]: resjson[key] }), {}
-    )
+    const data = forkedAt ? store.getData("ju", dataType, forkedAt).fail : resjson
+    console.log(data)
     remaining.innerText = `0/${Object.keys(data).length}`
     let nowData = getRandom(data)
     render()
@@ -72,7 +73,8 @@ input.focus()
     }
 
     async function correct(isskip) {
-        if (!isskip) corrected.push(nowData[0])
+        if (!isskip) corrected[nowData[0]] = nowData[1]
+        else failed[nowData[0]] = nowData[1]
         used.push(nowData[0])
         daneo.style.color = "#00ff00"
         daneo.innerText = `${nowData[0]} (${nowData[1]})`
@@ -80,15 +82,9 @@ input.focus()
         await sleep(1000)
         if (used.length === Object.keys(data).length) {
             render()
-            const wnrhkstlr = JSON.parse(localStorage.getItem(`wnrhkstlr_${dataType}`))
-            const willAdd = {
-                fork: 
-            }
-            if (failIndex !== -1) {
+            
+            store.addData("ju", dataType, forkedAt, corrected, failed)
 
-            }
-            wnrhkstlr.unshift(corrected)
-            localStorage.setItem(`wnrhkstlr_${dataType}`, JSON.stringify(wnrhkstlr))
             daneo.innerText = "시험 끝!"
             return 
         }
