@@ -25,7 +25,7 @@ if (!localStorage.getItem(`gek_${dataType}`)) localStorage.setItem(`gek_${dataTy
     const sleep = (timeToDelay) => new Promise((resolve) => setTimeout(resolve, timeToDelay))
 
     daneo.innerText = "로딩중"
-    const res = await fetch(`/data/${dataType}/gek`)
+    const res = await fetch(`/data/${dataType}`)
     const resjson = await res.json()
     const data = forkedAt ? store.getData("gek", dataType, forkedAt).fail : resjson
     let nowData = getRandom(data)
@@ -52,12 +52,12 @@ if (!localStorage.getItem(`gek_${dataType}`)) localStorage.setItem(`gek_${dataTy
                 daneo.innerText = `${nowData.word} (${nowData.mean})`
                 toggleInput()
                 if (correct) {
-                    corrected.push(nowData.word)
+                    corrected.push({word: nowData.word, mean: nowData.mean})
                     daneo.style.color = "#00ff00"
                     await sleep(500)
                 }
                 else {
-                    failed.push(nowData.word)
+                    failed.push({word: nowData.word, mean: nowData.mean})
                     daneo.style.color = "#ff0000"
                     await sleep(250)
                 }

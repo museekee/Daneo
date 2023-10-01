@@ -24,8 +24,8 @@ const rule = {
     duplication: false
 }
 
-const corrected = {}
-const failed = {}
+const corrected = []
+const failed = []
 const used = []
 
 input.focus()
@@ -39,13 +39,13 @@ if (!localStorage.getItem(`ju_${dataType}`)) localStorage.setItem(`ju_${dataType
     const resjson = await res.json()
     const data = forkedAt ? store.getData("ju", dataType, forkedAt).fail : resjson
     console.log(data)
-    remaining.innerText = `0/${Object.keys(data).length}`
+    remaining.innerText = `0/${data.length}`
     let nowData = getRandom(data)
     render()
     
     input.onkeydown = async (e) => {
         if (e.key !== "Enter") return
-        if (nowData[1] === e.currentTarget.value) {
+        if (nowData.mean === e.currentTarget.value) {
             my.correct++
             await correct()
         }
@@ -64,7 +64,7 @@ if (!localStorage.getItem(`ju_${dataType}`)) localStorage.setItem(`ju_${dataType
     }
     choseong.onclick = async (e) => {
         const res = []
-        nowData[1].split("").forEach(element => {
+        nowData.mean.split("").forEach(element => {
             res.push(["ㄱ", "ㄲ", "ㄴ", "ㄷ", "ㄸ", "ㄹ", "ㅁ", "ㅂ", "ㅃ", "ㅅ", "ㅆ", "ㅇ", "ㅈ", "ㅉ", "ㅊ", "ㅋ", "ㅌ", "ㅍ", "ㅎ"][parseInt((element.charCodeAt(0) - 44032) / (21 * 28))] ?? " ")
         })
         my.hint++
@@ -73,14 +73,14 @@ if (!localStorage.getItem(`ju_${dataType}`)) localStorage.setItem(`ju_${dataType
     }
 
     async function correct(isskip) {
-        if (!isskip) corrected[nowData[0]] = nowData[1]
-        else failed[nowData[0]] = nowData[1]
-        used.push(nowData[0])
+        if (!isskip) corrected.push({word: nowData.word, mean: nowData.mean})
+        else failed.push({word: nowData.word, mean: nowData.mean})
+        used.push(nowData.word)
         daneo.style.color = "#00ff00"
-        daneo.innerText = `${nowData[0]} (${nowData[1]})`
+        daneo.innerText = `${nowData.word} (${nowData.mean})`
         toggleInput()
         await sleep(1000)
-        if (used.length === Object.keys(data).length) {
+        if (used.length === data.length) {
             render()
             
             store.addData("ju", dataType, forkedAt, corrected, failed)
@@ -102,17 +102,18 @@ if (!localStorage.getItem(`ju_${dataType}`)) localStorage.setItem(`ju_${dataType
         input.focus()
     }
     function render() {
-        daneo.innerText = nowData[0]
+        daneo.innerText = nowData.word
         document.getElementById("correct").innerText = my.correct
         document.getElementById("skip").innerText = my.skip
         document.getElementById("hint").innerText = my.hint
         document.getElementById("correctPercent").innerText = `${my.correct}/${my.correct + my.skip} (${Math.round((my.correct / (my.correct + my.skip))*100)}%)`
-        remaining.innerText = `${my.correct + my.skip}/${Object.keys(data).length}`
+        remaining.innerText = `${my.correct + my.skip}/${data.length}`
     }
 
+    /** @returns {{word: string, mean: string}} */
     function getRandom(data) {
-        const dt = Object.entries(data)[parseInt(Math.random() * Object.entries(data).length)]
-        if (used.includes(dt[0])) return getRandom(data)
+        const dt = data[parseInt(Math.random() * data.length)]
+        if (used.includes(dt.word)) return getRandom(data)
         else return dt
     }
 })()

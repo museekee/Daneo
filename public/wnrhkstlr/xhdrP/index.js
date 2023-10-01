@@ -49,28 +49,28 @@ for (let i = 0; i < datas.length; i++) {
     div.appendChild(detail)
     div.appendChild(practice)
     
-    for (const item of Object.entries(result.correct)) {
+    for (const item of result.correct) {
         const tableItem = document.createElement("d-item")
         if (pageType === "hanja") {
             const hanja = document.createElement("d-hanja")
-            hanja.innerText = item[0]
+            hanja.innerText = item.word
             tableItem.appendChild(hanja)
         }
         const mean = document.createElement("d-mean")
-        mean.innerText = item[1]
+        mean.innerText = item.mean
         tableItem.appendChild(mean)
         table.appendChild(tableItem)
     }
     
-    for (const item of Object.entries(result.fail)) {
+    for (const item of result.fail) {
         const tableItem = document.createElement("d-item")
         if (pageType === "hanja") {
             const hanja = document.createElement("d-hanja")
-            hanja.innerText = item[0]
+            hanja.innerText = item.word
             tableItem.appendChild(hanja)
         }
         const mean = document.createElement("d-mean")
-        mean.innerText = item[1]
+        mean.innerText = item.mean
         tableItem.style.backgroundColor = "#ff0000"
         tableItem.style.color = "#ffffff"
         tableItem.appendChild(mean)

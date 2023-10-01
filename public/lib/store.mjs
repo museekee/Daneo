@@ -2,8 +2,8 @@
  * @typedef {{
  *  id: string
  *  fork: string | null,
- *  correct: Record<string, string>,
- *  fail: Record<string, string>
+ *  correct: {word: string, mean: string}[],
+ *  fail: {word: string, mean: string}[]
  * }} TResult
  */
 
@@ -35,8 +35,8 @@ export const getData = (type, data, id) => {
  * @param {"ju" | "gek"} type ju: 주관식 / gek: 객관식
  * @param {string} data hanmun등 어떤 데이터인지.
  * @param {string | null} fork 포크한 데이터의 고유 아이디
- * @param {Record<string, string>} correct
- * @param {Record<string, string>} fail
+ * @param {{word: string, mean: string}[]} correct
+ * @param {{word: string, mean: string}[]} fail
  */
 export const addData = (type, data, fork, correct, fail) => {
     const beforeData = getDatas(type, data)
