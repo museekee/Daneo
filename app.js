@@ -13,5 +13,13 @@ app.get("/data/:id", async (req, res) => {
         return res.status(404).send()
     }
 })
+app.get("/data/:id/gek", async (req, res) => {
+    try {
+        return res.send(Object.entries(require(`./data/${req.params.id}.js`)).map(elem => {return {word: elem[0], mean: elem[1]}}))
+    }
+    catch (err) {
+        return res.status(404).send()
+    }
+})
 
 app.listen(80)
