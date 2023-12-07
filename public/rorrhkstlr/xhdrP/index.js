@@ -24,10 +24,9 @@ function accordionClick() {
 }
 
 
-const datas = store.getDatas("ju", dataType)
+const datas = store.getDatas("gek", dataType)
 for (let i = 0; i < datas.length; i++) {
     const result = datas[i]
-    console.log(result)
     const details = []
 
     const accordion = document.createElement("li")
@@ -43,7 +42,7 @@ for (let i = 0; i < datas.length; i++) {
     div.classList.add('open-accordion')
     div.innerText = datas.length == datas.length - i ? "최근 결과" : `${i+1}번째 결과`
     table.classList.add('content')
-    practice.onclick = () => {location.href = `/wnrhkstlr?data=${dataType}&fork=${encodeURIComponent(result.id)}`}
+    practice.onclick = () => {location.href = `/rorrhkstlr?data=${dataType}&fork=${encodeURIComponent(result.id)}`}
     practice.innerText = "틀린 것만 시험"
     practice.style.float = "right"
     div.appendChild(detail)

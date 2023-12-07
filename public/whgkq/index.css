@@ -1,0 +1,126 @@
+body {
+    margin: 0;
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    grid-template-rows: 1fr 200px 200px 100px;
+    grid-template-columns: 1fr 150px;
+    justify-items: center;
+    align-items: center;
+}
+
+#daneo {
+    grid-column: 1;
+    grid-row: 1;
+    display: grid;
+    background: #eeeeee;
+    width: 1250px;
+    height: 300px;
+    border-radius: 200px;
+    justify-content: center;
+    align-items: center;
+    font-size: 150px;
+}
+
+#inputed {
+    grid-column: 1;
+    grid-row: 2;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    background: #eeeeee;
+    width: 1250px;
+    font-size: 150px;
+    border-radius: 200px;
+    padding: 10px;
+}
+
+#input {
+    grid-column: 1;
+    grid-row: 3;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    width: 790px;
+    height: 200px;
+    background: #eeeeee;
+    border: none;
+    border-radius: 50px;
+}
+#input > button {
+    border: none;
+    background: none;
+    font-size: 40px;
+    cursor: pointer;
+    outline: none;
+}
+#input > button:nth-child(1) {
+    border-top-left-radius: 50px;
+}
+#input > button:nth-child(4) {
+    border-top-right-radius: 50px;
+}
+#input > button:nth-child(5) {
+    border-bottom-left-radius: 50px;
+}
+#input > button:nth-child(8) {
+    border-bottom-right-radius: 50px;
+}
+#input > button:hover {
+    background: #00000022;
+}
+#input > button:active {
+    background: #00000088;
+}
+
+#my {
+    display: flex;
+    grid-column: 1;
+    grid-row: 4;
+    gap: 50px;
+}
+#my > span {
+    font-size: 50px;
+}
+#correct {
+    color: #00ff00;
+}
+#correct::before {
+    content: "정답: ";
+}
+#fail {
+    color: #ff0000;
+}
+#fail::before {
+    content: "오답: ";
+}
+#correctPercent {
+    color: #0000ff;
+}
+#correctPercent::before {
+    content: "정답률: ";
+}
+
+#right {
+    display: grid;
+    grid-column: 2;
+    grid-row: 1 / 3;
+}
+#right > button {
+    width: 150px;
+    height: 75px;
+    font-size: 50px;
+    background: none;
+}
+#right > button:hover {
+    background: #00000022;
+}
+#right > button:active {
+    background: #00000088;
+}
+#remaining {
+    font-size: 40px;
+    font-weight: bold;
+    text-align: center;
+    padding: 20px 0 20px 0;
+}

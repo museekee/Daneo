@@ -79,7 +79,7 @@ if (!localStorage.getItem(`ju_${dataType}`)) localStorage.setItem(`ju_${dataType
         daneo.style.color = "#00ff00"
         daneo.innerText = `${nowData.word} (${nowData.mean})`
         toggleInput()
-        await sleep(1000)
+        await sleep(250)
         if (used.length === data.length) {
             render()
             
