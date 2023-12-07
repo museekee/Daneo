@@ -45,7 +45,7 @@ if (!localStorage.getItem(`ju_${dataType}`)) localStorage.setItem(`ju_${dataType
     
     input.onkeydown = async (e) => {
         if (e.key !== "Enter") return
-        if (nowData.mean === e.currentTarget.value) {
+        if (nowData.mean.includes(e.currentTarget.value)) {
             my.correct++
             await correct()
         }

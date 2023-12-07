@@ -39,15 +39,16 @@ if (!localStorage.getItem(`gek_${dataType}`)) localStorage.setItem(`gek_${dataTy
 
     function render() {
         daneo.innerText = nowData.word
-        const correctAnswerIdx = Math.floor(Math.random() * 5)
+        const correctAnswerIdx = Math.floor(Math.random() * 5) // for상에서의 idx
         for (let i = 0; i < 5; i++) {
             const button = document.createElement("button")
-            let nd = i === correctAnswerIdx ? nowData : getRandom(data)
+            
+            let nd = i === correctAnswerIdx ? nowData : getRandom(data, true, nowData.word)
             button.innerText = nd.mean
             button.onclick = async () => {
                 used.push(nowData.word)
                 const correct = i === correctAnswerIdx
-
+    
                 daneo.innerText = `${nowData.word} (${nowData.mean})`
                 toggleInput()
                 if (correct) {
@@ -62,9 +63,17 @@ if (!localStorage.getItem(`gek_${dataType}`)) localStorage.setItem(`gek_${dataTy
                 }
                 daneo.style.color = "#000000"
                 clearInputs()
-                nowData = getRandom(data)
-                toggleInput()
-                render()
+                
+                if (used.length === data.length) {
+                    daneo.innerText = "시험 끝!"
+                    store.addData("gek", dataType, forkedAt, corrected, failed)
+                    return
+                }
+                else {
+                    nowData = getRandom(data, false)
+                    toggleInput()
+                    render()
+                }
             }
             input.appendChild(button)
         }
@@ -79,9 +88,17 @@ if (!localStorage.getItem(`gek_${dataType}`)) localStorage.setItem(`gek_${dataTy
         }
     }
 
-    function getRandom(data) {
+    /**
+     * 
+     * @param {{ word: string, mean: string[] }} data  
+     * @param { boolean } canUsed 이미 사용한 글자도 추출해줄까?
+     * @param { string? } withoutWord 이 글자는 빼고 추출하기
+     * @returns 
+     */
+    function getRandom(data, canUsed, withoutWord) {
         const dt = data[parseInt(Math.random() * data.length)]
-        if (used.includes(dt.word)) return getRandom(data)
+        
+        if ((!canUsed && used.includes(dt.word)) || dt.word == withoutWord) return getRandom(data, withoutWord)
         else return dt
     }
 })()
