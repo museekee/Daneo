@@ -57,7 +57,7 @@ for (let i = 0; i < datas.length; i++) {
             tableItem.appendChild(hanja)
         }
         const mean = document.createElement("d-mean")
-        mean.innerText = item.mean
+        mean.innerText = item.mean.join(", ")
         tableItem.appendChild(mean)
         table.appendChild(tableItem)
     }
@@ -70,7 +70,7 @@ for (let i = 0; i < datas.length; i++) {
             tableItem.appendChild(hanja)
         }
         const mean = document.createElement("d-mean")
-        mean.innerText = item.mean
+        mean.innerText = item.mean.join(", ")
         tableItem.style.backgroundColor = "#ff0000"
         tableItem.style.color = "#ffffff"
         tableItem.appendChild(mean)

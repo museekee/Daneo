@@ -44,7 +44,7 @@ if (!localStorage.getItem(`gek_${dataType}`)) localStorage.setItem(`gek_${dataTy
             const button = document.createElement("button")
             
             let nd = i === correctAnswerIdx ? nowData : getRandom(data, true, nowData.word)
-            button.innerText = nd.mean
+            button.innerText = nd.mean.join(" / ")
             button.onclick = async () => {
                 used.push(nowData.word)
                 const correct = i === correctAnswerIdx
