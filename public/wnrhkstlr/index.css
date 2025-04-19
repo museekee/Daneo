@@ -85,6 +85,9 @@ body {
 #right > button:active {
     background: #00000088;
 }
+#choseongBtn {
+    display: none;
+}
 #remaining {
     font-size: 40px;
     font-weight: bold;
